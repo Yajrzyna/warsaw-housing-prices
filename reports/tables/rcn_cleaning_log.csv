@@ -1,0 +1,14 @@
+rule,description,flagged_total,removed_sequential,remaining_after
+excl_invalid_date,"deed date missing, before 2006 or after snapshot",17,17,384878
+excl_duplicate,"same address, area, floor, date and price as another record",1637,1637,383241
+excl_non_market_type,"transaction type other than free market (tender, enforcement, bonifikata, ...)",601,599,382642
+excl_public_party,State Treasury or local government as seller or buyer,446,313,382329
+excl_partial_share,only a fraction (udzial < 1) of the unit sold,2516,2498,379831
+excl_not_unit_ownership,right sold is not ownership of a unit,254,241,379590
+excl_bundle_price,several units in deed and no price allocated to this apartment,2979,2908,376682
+excl_multi_apartment_deed,deed sells more than one apartment (portfolio / investor deal),3760,2827,373855
+excl_area,"usable area missing or outside (15.0, 300.0) m2",595,519,373336
+excl_no_district,location / district unknown,756,728,372608
+excl_price_m2_bounds,"price/m2 outside (1000, 150000) PLN",3757,529,372079
+excl_outlier_low,price/m2 robust z < -4.0 vs district-year-market peers,8399,5352,366727
+excl_outlier_high,price/m2 robust z > 6.0 vs district-year-market peers,333,299,366428

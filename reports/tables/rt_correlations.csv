@@ -1,0 +1,73 @@
+target,driver,lag,corr,n
+nominal price growth,mortgage rate (level),0,0.026,76
+nominal price growth,mortgage rate (level),1,-0.076,76
+nominal price growth,mortgage rate (level),2,-0.146,76
+nominal price growth,mortgage rate (level),3,-0.176,76
+nominal price growth,mortgage rate (level),4,-0.173,76
+nominal price growth,mortgage rate (level),5,-0.19,75
+nominal price growth,mortgage rate (level),6,-0.213,74
+nominal price growth,mortgage rate (level),7,-0.26,73
+nominal price growth,mortgage rate (level),8,-0.338,72
+nominal price growth,mortgage rate change (y/y),0,0.234,76
+nominal price growth,mortgage rate change (y/y),1,0.094,75
+nominal price growth,mortgage rate change (y/y),2,-0.028,74
+nominal price growth,mortgage rate change (y/y),3,-0.057,73
+nominal price growth,mortgage rate change (y/y),4,0.026,72
+nominal price growth,mortgage rate change (y/y),5,0.189,71
+nominal price growth,mortgage rate change (y/y),6,0.345,70
+nominal price growth,mortgage rate change (y/y),7,0.439,69
+nominal price growth,mortgage rate change (y/y),8,0.439,68
+nominal price growth,real mortgage rate (level),0,-0.178,76
+nominal price growth,real mortgage rate (level),1,-0.274,75
+nominal price growth,real mortgage rate (level),2,-0.411,74
+nominal price growth,real mortgage rate (level),3,-0.55,73
+nominal price growth,real mortgage rate (level),4,-0.637,72
+nominal price growth,real mortgage rate (level),5,-0.672,71
+nominal price growth,real mortgage rate (level),6,-0.661,70
+nominal price growth,real mortgage rate (level),7,-0.603,69
+nominal price growth,real mortgage rate (level),8,-0.518,68
+nominal price growth,borrowing capacity growth (y/y),0,-0.149,76
+nominal price growth,borrowing capacity growth (y/y),1,-0.01,75
+nominal price growth,borrowing capacity growth (y/y),2,0.11,74
+nominal price growth,borrowing capacity growth (y/y),3,0.134,73
+nominal price growth,borrowing capacity growth (y/y),4,0.04,72
+nominal price growth,borrowing capacity growth (y/y),5,-0.138,71
+nominal price growth,borrowing capacity growth (y/y),6,-0.312,70
+nominal price growth,borrowing capacity growth (y/y),7,-0.423,69
+nominal price growth,borrowing capacity growth (y/y),8,-0.435,68
+real price growth,mortgage rate (level),0,-0.178,76
+real price growth,mortgage rate (level),1,-0.244,76
+real price growth,mortgage rate (level),2,-0.265,76
+real price growth,mortgage rate (level),3,-0.236,76
+real price growth,mortgage rate (level),4,-0.175,76
+real price growth,mortgage rate (level),5,-0.134,75
+real price growth,mortgage rate (level),6,-0.097,74
+real price growth,mortgage rate (level),7,-0.1,73
+real price growth,mortgage rate (level),8,-0.16,72
+real price growth,mortgage rate change (y/y),0,-0.005,76
+real price growth,mortgage rate change (y/y),1,-0.206,75
+real price growth,mortgage rate change (y/y),2,-0.356,74
+real price growth,mortgage rate change (y/y),3,-0.351,73
+real price growth,mortgage rate change (y/y),4,-0.188,72
+real price growth,mortgage rate change (y/y),5,0.065,71
+real price growth,mortgage rate change (y/y),6,0.3,70
+real price growth,mortgage rate change (y/y),7,0.447,69
+real price growth,mortgage rate change (y/y),8,0.475,68
+real price growth,real mortgage rate (level),0,0.107,76
+real price growth,real mortgage rate (level),1,0.06,75
+real price growth,real mortgage rate (level),2,-0.053,74
+real price growth,real mortgage rate (level),3,-0.195,73
+real price growth,real mortgage rate (level),4,-0.307,72
+real price growth,real mortgage rate (level),5,-0.363,71
+real price growth,real mortgage rate (level),6,-0.367,70
+real price growth,real mortgage rate (level),7,-0.325,69
+real price growth,real mortgage rate (level),8,-0.255,68
+real price growth,borrowing capacity growth (y/y),0,0.064,76
+real price growth,borrowing capacity growth (y/y),1,0.267,75
+real price growth,borrowing capacity growth (y/y),2,0.418,74
+real price growth,borrowing capacity growth (y/y),3,0.409,73
+real price growth,borrowing capacity growth (y/y),4,0.232,72
+real price growth,borrowing capacity growth (y/y),5,-0.041,71
+real price growth,borrowing capacity growth (y/y),6,-0.3,70
+real price growth,borrowing capacity growth (y/y),7,-0.468,69
+real price growth,borrowing capacity growth (y/y),8,-0.508,68

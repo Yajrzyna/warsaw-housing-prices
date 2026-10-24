@@ -1,0 +1,19 @@
+label,premium_pct,ci_low_pct,ci_high_pct
+1 room (vs 2),4.29,2.64,5.96
+3 rooms (vs 2),-6.46,-7.08,-5.83
+4 rooms (vs 2),-11.57,-12.49,-10.63
+5+ rooms (vs 2),-14.82,-16.31,-13.3
+Ground floor (vs 2-4),-1.81,-2.24,-1.39
+Floor 5-7 (vs 2-4),2.44,1.97,2.91
+Floor 8-10 (vs 2-4),4.06,2.99,5.14
+Floor 11-15 (vs 2-4),5.46,2.8,8.19
+Floor 16+ (vs 2-4),24.05,10.07,39.81
+Top floor,-0.79,-1.42,-0.16
+Building 5-10 storeys (vs 1-4),-0.09,-1.28,1.13
+Building 11+ storeys (vs 1-4),-4.75,-6.95,-2.51
+"New building, 0-1 yrs old (vs older)",12.78,10.1,15.52
+"New building, 2-4 yrs",16.77,14.57,19.01
+"New building, 5-9 yrs",14.59,12.33,16.9
+"New building, 10+ yrs",6.64,5.12,8.19
+Has cellar / storage room,-1.26,-1.98,-0.55
+Developer sale (vs resale),-12.74,-14.56,-10.88

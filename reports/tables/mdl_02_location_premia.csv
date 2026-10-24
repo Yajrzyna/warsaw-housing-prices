@@ -1,0 +1,15 @@
+label,premium_pct,ci_low_pct,ci_high_pct
+Centre 0-2 km (vs 6-8),32.85,28.26,37.6
+Centre 2-4 km,14.69,12.36,17.07
+Centre 4-6 km,9.69,7.63,11.79
+Centre 8-10 km,-3.51,-5.52,-1.47
+Centre 10-12 km,-5.93,-8.22,-3.58
+Centre 12+ km,-10.37,-12.22,-8.48
+Metro < 500 m (vs > 2 km),10.85,8.31,13.44
+Metro 500 m-1 km,7.97,5.7,10.3
+Metro 1-2 km,5.33,3.48,7.21
+Park within 300 m,1.42,-0.19,3.05
+Forest within 300 m,1.4,-0.02,2.84
+Vistula within 1 km,5.29,3.54,7.06
+Per 10 bus/tram stops within 500 m,1.03,-0.32,2.4
+Right bank of the Vistula,-10.91,-12.12,-9.68

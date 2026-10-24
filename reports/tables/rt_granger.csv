@@ -1,0 +1,5 @@
+rate,lags,rate_to_price_F,rate_to_price_p,price_to_rate_F,price_to_rate_p
+nominal rate,2,4.367,0.0164,1.9223,0.1541
+real rate,2,0.2768,0.7591,1.0857,0.3434
+nominal rate,4,2.5533,0.0477,0.6571,0.6241
+real rate,4,0.4682,0.7588,1.4115,0.2407

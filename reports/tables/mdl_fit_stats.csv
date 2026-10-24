@@ -1,0 +1,3 @@
+model,n,r2,morans_i,p_value
+Spec A (location variables),76733,0.5293848802155703,0.3700297837046536,0.005
+Spec B (H3-cell fixed effects),76708,0.31068807778469254,0.20383962705767722,0.005

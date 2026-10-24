@@ -1,0 +1,12 @@
+segment,method,growth_2007_2015_pct,growth_2015_2025_pct,cagr_2015_2025_pct,peak_quarter,change_peak_to_last_pct,last_quarter,std_qoq_pp,corr_qoq_vs_nbp,corr_yoy_vs_nbp
+primary_developer,hedonic,43.023,111.294,7.768,2026Q1,0.0,2026Q1,3.173,,
+primary_developer,hedonic_real,19.235,37.465,3.233,2025Q4,-0.915,2026Q1,3.142,,
+primary_developer,median,30.923,105.875,7.488,2025Q4,-0.001,2026Q1,5.366,,
+primary_developer,mix_adjusted,27.302,116.69,8.04,2026Q1,0.0,2026Q1,5.141,,
+secondary,hedonic,-12.403,131.468,8.755,2024Q3,-1.304,2026Q1,3.193,0.803,0.951
+secondary,hedonic_adjacent,-10.333,134.484,8.896,2024Q3,-1.387,2026Q1,3.165,0.803,0.951
+secondary,hedonic_real,-26.997,50.616,4.181,2024Q3,-5.729,2026Q1,3.279,0.795,0.893
+secondary,median,-11.96,126.658,8.527,2024Q3,-3.439,2026Q1,3.324,0.771,0.946
+secondary,mix_adjusted,-11.829,130.11,8.691,2024Q3,-3.032,2026Q1,3.279,0.784,0.944
+secondary,nbp_hedonic,-10.113,96.194,6.972,2026Q1,0.0,2026Q1,3.421,1.0,1.0
+secondary,repeat_sales,-10.635,126.317,8.51,2024Q4,-0.445,2026Q1,3.25,0.783,0.94

@@ -1,0 +1,885 @@
+<title>Warsaw Flat Prices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --page: #f4f5f7; --surface: #fcfcfb; --surface-2: #eceef1; --ink: #111418; --ink-2: #4c525c; --muted: #7d838d;
+  --grid: #e2e4e8; --axis: #c3c6cc; --border: rgba(17, 20, 24, 0.10); --focus: #1c5cab;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --deemph: #b9bcc2;
+  --div-neg: #104281; --div-neg2: #3987e5; --div-neg3: #9ec5f4; --div-mid: #f0efec; --div-pos3: #f3b2b1; --div-pos2: #e34948; --div-pos: #a8282a;
+  --seq-0: #cde2fb; --seq-1: #86b6ef; --seq-2: #3987e5; --seq-3: #1c5cab; --seq-4: #0d366b;
+  --good: #006300; --river: #9ec5f4; --district-line: #4c525c;
+  --font-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-head: "Archivo", "Public Sans", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0f1113; --surface: #1a1b1d; --surface-2: #24272b; --ink: #f2f3f5; --ink-2: #c3c6cc; --muted: #8b9099;
+    --grid: #2c2e32; --axis: #3d4046; --border: rgba(255, 255, 255, 0.10); --focus: #86b6ef;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --deemph: #5a5e66;
+    --div-neg: #6da7ec; --div-neg2: #3987e5; --div-neg3: #1c4a80; --div-mid: #383835; --div-pos3: #7a2a2a; --div-pos2: #d04545; --div-pos: #f08a8a;
+    --seq-0: #173a63; --seq-1: #1c5cab; --seq-2: #3987e5; --seq-3: #86b6ef; --seq-4: #cde2fb;
+    --good: #0ca30c; --river: #1c4a80; --district-line: #c3c6cc;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0f1113; --surface: #1a1b1d; --surface-2: #24272b; --ink: #f2f3f5; --ink-2: #c3c6cc; --muted: #8b9099;
+  --grid: #2c2e32; --axis: #3d4046; --border: rgba(255, 255, 255, 0.10); --focus: #86b6ef;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --deemph: #5a5e66;
+  --div-neg: #6da7ec; --div-neg2: #3987e5; --div-neg3: #1c4a80; --div-mid: #383835; --div-pos3: #7a2a2a; --div-pos2: #d04545; --div-pos: #f08a8a;
+  --seq-0: #173a63; --seq-1: #1c5cab; --seq-2: #3987e5; --seq-3: #86b6ef; --seq-4: #cde2fb;
+  --good: #0ca30c; --river: #1c4a80; --district-line: #c3c6cc;
+}
+* { box-sizing: border-box; }
+body { background: var(--page); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--font-head); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; line-height: 1.1; }
+h2 { font-size: 24px; font-weight: 700; }
+h3 { font-size: 16px; font-weight: 600; }
+p { margin: 0; }
+.lede { color: var(--ink-2); max-width: 68ch; }
+.num { font-variant-numeric: tabular-nums; }
+a { color: var(--focus); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+header.top { padding-block: 36px 20px; display: grid; gap: 10px; }
+.eyebrow { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+nav.sections { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--page) 92%, transparent);
+  backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); }
+nav.sections .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; scrollbar-width: none; }
+nav.sections a { white-space: nowrap; text-decoration: none; color: var(--ink-2); font-size: 13.5px; font-weight: 500; padding: 6px 10px; border-radius: 6px; }
+nav.sections a:hover { background: var(--surface-2); color: var(--ink); }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; padding-block: 18px 8px; }
+.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: grid; gap: 2px; align-content: start; }
+.kpi .label { font-size: 13px; color: var(--ink-2); }
+.kpi .value { font-family: var(--font-head); font-size: 28px; font-weight: 700; line-height: 1.2; }
+.kpi .sub { font-size: 12.5px; color: var(--muted); }
+
+section.block { padding-block: 40px 8px; display: grid; gap: 14px; scroll-margin-top: 56px; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: grid; gap: 12px; min-width: 0; align-content: start; }
+.panel-head { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.panel-note { font-size: 13px; color: var(--muted); }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 14px; }
+
+.seg { display: inline-flex; flex-wrap: wrap; gap: 2px; background: var(--surface-2); border-radius: 8px; padding: 3px; }
+.seg button { font: inherit; font-size: 13px; font-weight: 500; border: 0; background: transparent; color: var(--ink-2); padding: 6px 11px; border-radius: 6px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; }
+.legend button { font: inherit; display: inline-flex; align-items: center; gap: 7px; border: 0; background: none; color: var(--ink-2); cursor: pointer; padding: 2px 0; }
+.legend button[aria-pressed="false"] { opacity: .45; }
+.swatch { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--font-body); }
+.tooltip { position: absolute; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,.14); border-radius: 8px; padding: 8px 10px; font-size: 12.5px; line-height: 1.45; min-width: 150px; z-index: 5; }
+.tooltip .t-head { font-weight: 600; margin-bottom: 3px; }
+.tooltip .t-row { display: flex; align-items: center; gap: 6px; justify-content: space-between; }
+.tooltip .t-row span:first-child { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+.tooltip .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+details.data { font-size: 13px; }
+details.data summary { cursor: pointer; color: var(--ink-2); }
+.table-wrap { overflow-x: auto; max-height: 360px; overflow-y: auto; margin-top: 8px; border: 1px solid var(--border); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 10px; text-align: right; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+thead th { position: sticky; top: 0; background: var(--surface-2); font-weight: 600; color: var(--ink-2); }
+th button { font: inherit; font-weight: 600; background: none; border: 0; color: inherit; cursor: pointer; padding: 0; }
+tr.best td { font-weight: 600; }
+
+.map-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 16px; align-items: start; }
+.map-side { display: grid; gap: 12px; font-size: 13.5px; color: var(--ink-2); }
+.map-side .picked { background: var(--surface-2); border-radius: 8px; padding: 10px 12px; }
+.ramp { height: 10px; border-radius: 3px; }
+.ramp-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+@media (max-width: 820px) { .map-layout { grid-template-columns: 1fr; } }
+
+.spark { display: block; }
+.calc { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+.form { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.field { display: grid; gap: 4px; font-size: 13px; color: var(--ink-2); }
+.field input[type=number], .field select { font: inherit; font-size: 14px; color: var(--ink); background: var(--surface); border: 1px solid var(--axis); border-radius: 7px; padding: 7px 9px; width: 100%; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink); }
+.result { background: var(--surface-2); border-radius: 10px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+.result .big { font-family: var(--font-head); font-size: 34px; font-weight: 700; line-height: 1.1; }
+.result .total { font-size: 17px; font-weight: 600; }
+.band { position: relative; height: 26px; }
+.band .b20, .band .b10 { position: absolute; top: 8px; height: 10px; border-radius: 5px; }
+.band .b20 { background: color-mix(in srgb, var(--s1) 25%, transparent); }
+.band .b10 { background: color-mix(in srgb, var(--s1) 55%, transparent); }
+.band .mid { position: absolute; top: 3px; width: 3px; height: 20px; background: var(--ink); border-radius: 2px; }
+.contrib { display: grid; gap: 3px; font-size: 13px; }
+.contrib div { display: flex; justify-content: space-between; gap: 10px; }
+.contrib span:last-child { font-variant-numeric: tabular-nums; }
+.btn-link { font: inherit; font-size: 13px; background: none; border: 0; color: var(--focus); cursor: pointer; padding: 0; text-decoration: underline; }
+
+.method { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 14px; font-size: 14px; }
+.method ul { margin: 6px 0 0; padding-left: 18px; color: var(--ink-2); display: grid; gap: 4px; }
+.funnel { display: grid; gap: 4px; font-size: 13px; }
+.funnel .row { display: grid; grid-template-columns: minmax(0, 1fr) 70px; gap: 10px; align-items: center; }
+.funnel .bar { height: 8px; background: var(--s1); border-radius: 4px; }
+footer { padding-block: 40px 48px; color: var(--muted); font-size: 12.5px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="wrap top">
+  <div class="eyebrow">Warsaw · apartment transactions · notarial deeds 2006–2026</div>
+  <h1>Warsaw Flat Prices</h1>
+  <p class="lede" id="intro"></p>
+</header>
+
+<nav class="sections" aria-label="Sections">
+  <div class="wrap">
+    <a href="#index">Price index</a><a href="#map">Map</a><a href="#districts">Districts</a><a href="#affordability">Affordability</a><a href="#rates">Rates &amp; outlook</a>
+    <a href="#drivers">What drives price</a><a href="#avm">Valuation model</a><a href="#calculator">Price calculator</a><a href="#method">Data &amp; method</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="kpis" id="kpis"></div>
+
+  <section class="block" id="index">
+    <h2>Price index</h2>
+    <p class="lede">Quarterly price level of Warsaw flats, 2015 = 100. The headline is a hedonic index: it compares like with like (same area, similar flats), so changes in what gets sold don't show up as price changes.</p>
+    <div class="panel">
+      <div class="panel-head">
+        <div class="seg" role="group" aria-label="Index view" id="index-view">
+          <button type="button" data-view="methods" aria-pressed="true">Methods compared</button>
+          <button type="button" data-view="real" aria-pressed="false">Nominal vs real</button>
+          <button type="button" data-view="yoy" aria-pressed="false">Annual growth</button>
+          <button type="button" data-view="primary" aria-pressed="false">New-build vs resale</button>
+        </div>
+        <div class="legend" id="index-legend"></div>
+      </div>
+      <div class="chart" id="index-chart"></div>
+      <p class="panel-note" id="index-note"></p>
+      <details class="data"><summary>Show data table</summary><div class="table-wrap" id="index-table"></div></details>
+    </div>
+  </section>
+
+  <section class="block" id="map">
+    <h2>Map</h2>
+    <p class="lede">Hexagons of about 0.7 km² with enough sales. Hover for values; click a hexagon to use that spot in the price calculator.</p>
+    <div class="panel">
+      <div class="panel-head">
+        <div class="seg" role="group" aria-label="Map layer" id="map-view">
+          <button type="button" data-layer="price" aria-pressed="true">Price level 2024–25</button>
+          <button type="button" data-layer="growth" aria-pressed="false">Growth vs Warsaw</button>
+          <button type="button" data-layer="location" aria-pressed="false">Location value (model)</button>
+        </div>
+      </div>
+      <div class="map-layout">
+        <div class="chart" id="map-chart"></div>
+        <div class="map-side">
+          <div><h3 id="map-title"></h3><p id="map-desc"></p></div>
+          <div><div class="ramp" id="map-ramp"></div><div class="ramp-labels" id="map-ramp-labels"></div></div>
+          <div class="picked" id="map-picked">Click a hexagon to select it.</div>
+        </div>
+      </div>
+      <details class="data"><summary>Show data table</summary><div class="table-wrap" id="map-table"></div></details>
+    </div>
+  </section>
+
+  <section class="block" id="districts">
+    <h2>Districts</h2>
+    <p class="lede">Resale market by district. "Quality-adjusted" growth comes from a hedonic index per district, which strips out changes in the mix of flats sold. Click a column to sort.</p>
+    <div class="panel"><div class="table-wrap" style="max-height:none" id="district-table"></div>
+      <p class="panel-note">Sparkline: district hedonic index 2006–2025 (blue) against Warsaw (gray), 2015 = 100.</p></div>
+  </section>
+
+  <section class="block" id="affordability">
+    <h2>Affordability &amp; drivers</h2>
+    <p class="lede">A typical flat here is 50 m² at the median resale price per m², measured against the average gross monthly wage in Warsaw (<span id="aff-wage"></span> PLN in <span id="aff-wage-q"></span>). The mortgage payment assumes an 80% loan over 25 years at the 3-month market rate plus 2 points.</p>
+    <div class="panel">
+      <div class="panel-head">
+        <div class="seg" role="group" aria-label="Affordability measure" id="aff-view">
+          <button type="button" data-view="years_of_wages" aria-pressed="true">Years of wages</button>
+          <button type="button" data-view="m2_per_wage" aria-pressed="false">m² per monthly wage</button>
+          <button type="button" data-view="payment_share" aria-pressed="false">Mortgage payment</button>
+        </div>
+      </div>
+      <div class="chart" id="aff-chart"></div>
+      <p class="panel-note" id="aff-note"></p>
+      <details class="data"><summary>Show data table</summary><div class="table-wrap" id="aff-table"></div></details>
+    </div>
+    <div class="grid-2">
+      <div class="panel"><h3>By district, 2025</h3><p class="panel-note">Years of the Warsaw average gross wage for a 50 m² resale flat, and the mortgage payment as a share of one monthly wage.</p><div class="chart" id="aff-district"></div></div>
+      <div class="panel"><h3>Bezpieczny Kredyt 2%: prices by flat size</h3><p class="panel-note" id="bk2-note"></p><div class="legend" id="bk2-legend"></div><div class="chart" id="bk2-chart"></div>
+        <details class="data"><summary>Show data table</summary><div class="table-wrap" id="bk2-table"></div></details></div>
+    </div>
+    <div class="panel"><h3>What moves prices</h3>
+      <p class="panel-note">Regression of year-on-year price growth (resale hedonic index, 2008–2026) on the change in the mortgage rate a few quarters earlier and on wage growth. Newey–West standard errors; *** p&lt;0.01, ** p&lt;0.05. About 74 quarters, so read these as associations.</p>
+      <div class="table-wrap" style="max-height:none" id="reg-table"></div></div>
+  </section>
+
+  <section class="block" id="rates">
+    <h2>Interest rates &amp; outlook</h2>
+    <p class="lede">A mortgage is a long, large loan, so its cost moves a lot with the rate: at about 6% over 25 years, one point more cuts what a given payment can borrow by about 9%. Warsaw prices follow that logic only partly. The real rate (the rate minus inflation) matters much more than the nominal one, and sales volumes react faster than prices.</p>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-head"><h3>Price growth vs the rate a year earlier</h3>
+          <div class="seg" role="group" aria-label="Rate measure" id="sc-view">
+            <button type="button" data-view="real" aria-pressed="true">Real rate</button>
+            <button type="button" data-view="nominal" aria-pressed="false">Nominal rate</button>
+          </div></div>
+        <div class="chart" id="sc-chart"></div>
+        <p class="panel-note" id="sc-note"></p>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3 id="cap-title">What an average wage can borrow vs prices</h3>
+          <div class="seg" role="group" aria-label="Capacity view" id="cap-view">
+            <button type="button" data-view="index" aria-pressed="true">Indices</button>
+            <button type="button" data-view="ratio" aria-pressed="false">Price ÷ capacity</button>
+          </div></div>
+        <div class="legend" id="cap-legend"></div>
+        <div class="chart" id="cap-chart"></div>
+        <p class="panel-note" id="cap-note"></p>
+      </div>
+    </div>
+    <div class="panel"><h3>Response to a one-point rate rise</h3>
+      <p class="panel-note">Cumulative change after a +1 point change in the mortgage rate, controlling for inflation, wage growth and past moves (local projections, 2008–2026, 90% confidence range in brackets). The central bank moves rates in response to the economy, so read these as associations.</p>
+      <div class="table-wrap" style="max-height:none" id="irf-table"></div></div>
+    <div class="panel">
+      <div class="panel-head"><h3>Outlook to <span id="fc-end"></span></h3></div>
+      <div class="legend" id="fc-legend"></div>
+      <div class="chart" id="fc-chart"></div>
+      <p class="panel-note" id="fc-note"></p>
+      <details class="data"><summary>How accurate were past forecasts?</summary><div class="table-wrap" id="fc-acc"></div></details>
+    </div>
+  </section>
+
+  <section class="block" id="drivers">
+    <h2>What drives price</h2>
+    <p class="lede">Hedonic regressions on <span id="drivers-n"></span> sales from 2023Q1–2026Q1. Effects are on price per m²; bars show 95% confidence intervals with errors clustered by building.</p>
+    <div class="grid-2">
+      <div class="panel"><h3>The flat and its building</h3><p class="panel-note">Compared with flats in the same ~0.7 km² area. Reference: 2 rooms, 1st–3rd floor, low-rise building built before 2007, resale.</p><div class="chart" id="unit-chart"></div>
+        <details class="data"><summary>Show data table</summary><div class="table-wrap" id="unit-table"></div></details></div>
+      <div class="panel"><h3>Location</h3><p class="panel-note">Holding flat features fixed. Reference: 6–8 km from the centre, metro more than 2 km away. Location effects overlap, so read them together.</p><div class="chart" id="loc-chart"></div>
+        <details class="data"><summary>Show data table</summary><div class="table-wrap" id="loc-table"></div></details></div>
+    </div>
+  </section>
+
+  <section class="block" id="avm">
+    <h2>Valuation model</h2>
+    <p class="lede">How accurately can a model value a flat it hasn't seen? Each model was tested on future sales (trained to 2024Q4, tested on 2025Q1–2026Q1) and on whole areas left out of training.</p>
+    <div class="grid-2" style="grid-template-columns:1fr">
+      <div class="panel"><h3>Accuracy</h3><div class="table-wrap" style="max-height:none" id="avm-table"></div>
+        <p class="panel-note">Median error: half of the valuations are closer than this. The data has no information about condition or interior finish, which limits accuracy.</p></div>
+      <div class="panel"><h3>What the best model relies on</h3><p class="panel-note">Increase in error when a feature is shuffled (permutation importance), gradient boosting + local prices.</p><div class="chart" id="imp-chart"></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="calculator">
+    <h2>Price calculator</h2>
+    <p class="lede">An estimate at <span id="calc-quarter"></span> prices from the hedonic model with area fixed effects, fitted to sales from <span id="calc-window"></span>. It's a statistical estimate from registered transactions, not an appraisal.</p>
+    <div class="panel calc">
+      <form class="form" id="calc-form" onsubmit="return false">
+        <label class="field">District<select id="c-district"></select></label>
+        <label class="field">Floor area (m²)<input type="number" id="c-area" min="15" max="300" step="1" value="52"></label>
+        <label class="field">Rooms<select id="c-rooms"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option><option value="5">5 or more</option></select></label>
+        <label class="field">Floor<select id="c-floor"><option value="ground">Ground floor</option><option value="base" selected>1st–3rd</option><option value="floor_5_7">4th–6th</option><option value="floor_8_10">7th–9th</option><option value="floor_11_15">10th–14th</option><option value="floor_16p">15th and up</option></select></label>
+        <label class="field">Building height<select id="c-height"><option value="low">1–4 storeys</option><option value="mid" selected>5–10 storeys</option><option value="high">11+ storeys</option></select></label>
+        <label class="field">Building age<select id="c-age"><option value="old" selected>Built before 2007</option><option value="new_age_0_1">New, 0–1 years</option><option value="new_age_2_4">New, 2–4 years</option><option value="new_age_5_9">New, 5–9 years</option><option value="new_age_10p">New, 10+ years</option></select></label>
+        <label class="field">Sale type<select id="c-seg"><option value="resale" selected>Resale</option><option value="developer">From developer</option></select></label>
+        <div class="field" style="align-content:end"><label class="check"><input type="checkbox" id="c-top"> Top floor</label><label class="check"><input type="checkbox" id="c-cellar"> Cellar or storage room</label></div>
+      </form>
+      <div class="result" aria-live="polite" id="calc-result"></div>
+    </div>
+  </section>
+
+  <section class="block" id="method">
+    <h2>Data &amp; method</h2>
+    <div class="method">
+      <div class="panel"><h3>Data</h3>
+        <ul>
+          <li><a href="https://architektura.um.warszawa.pl/udostepniane-dane-rcn1" target="_blank" rel="noopener">Rejestr Cen Nieruchomości (RCN)</a>, Warsaw: every sale from notarial deeds, open data since 2025.</li>
+          <li><a href="https://opendata.geoportal.gov.pl/" target="_blank" rel="noopener">BDOT10k and PRG</a> (GUGiK): buildings, storeys, transit stops, parks, district boundaries.</li>
+          <li><a href="https://nbp.pl/en/statistic-and-financial-reporting/housing-market/" target="_blank" rel="noopener">NBP BaRN</a> housing prices: benchmark. <a href="https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table" target="_blank" rel="noopener">Eurostat HICP</a>: inflation.</li>
+          <li>Metro opening dates by station, so distance to metro reflects the network on each sale date.</li>
+        </ul></div>
+      <div class="panel"><h3>Cleaning: apartment sales kept</h3><div class="funnel" id="funnel"></div></div>
+      <div class="panel"><h3>Caveats</h3>
+        <ul>
+          <li>Deeds are registered with a lag: 2026Q2 is almost empty and excluded; series end at 2026Q1.</li>
+          <li>Developer prices are recorded at the final deed, usually 1–3 years after the price was agreed.</li>
+          <li>Building age is known only for buildings first sold new from 2007 on.</li>
+          <li>NBP's hedonic index grows less than every RCN-based index after 2016 (+<span id="nbp-growth"></span>% vs +<span id="our-growth"></span>% for 2015–2025).</li>
+          <li>Prices are nominal and include VAT on developer sales unless marked real.</li>
+        </ul></div>
+    </div>
+  </section>
+</main>
+<footer class="wrap" id="footer"></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+const DATA = /*__DATA__*/null;
+
+const nf0 = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 });
+const nf1 = new Intl.NumberFormat("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const fmt0 = v => v == null ? "–" : nf0.format(v);
+const fmt1 = v => v == null ? "–" : nf1.format(v);
+const sgn = (v, d = 0) => v == null ? "–" : (v > 0 ? "+" : v < 0 ? "−" : "") + (d ? nf1.format(Math.abs(v)) : nf0.format(Math.abs(v)));
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const qDate = q => new Date(+q.slice(0, 4), (+q.slice(5) - 1) * 3 + 1, 15);
+const qLabel = q => q.slice(0, 4) + " Q" + q.slice(5);
+const el = (tag, attrs = {}, html = "") => { const e = document.createElement(tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); e.innerHTML = html; return e; };
+
+/* ---------------------------------------------------------------- tooltip */
+function tooltipFor(container) {
+  let tip = container.querySelector(".tooltip");
+  if (!tip) { tip = el("div", { class: "tooltip", hidden: "" }); container.appendChild(tip); }
+  return {
+    show(html, x, y) {
+      tip.innerHTML = html; tip.hidden = false;
+      const w = tip.offsetWidth, h = tip.offsetHeight, cw = container.clientWidth;
+      let left = x + 14; if (left + w > cw) left = x - w - 14; if (left < 0) left = 0;
+      let top = y - h / 2; if (top < 0) top = 0;
+      tip.style.left = left + "px"; tip.style.top = top + "px";
+    },
+    hide() { tip.hidden = true; }
+  };
+}
+
+function tableHTML(cols, rows) {
+  return "<table><thead><tr>" + cols.map(c => `<th>${c}</th>`).join("") + "</tr></thead><tbody>" +
+    rows.map(r => "<tr>" + r.map(v => `<td>${v}</td>`).join("") + "</tr>").join("") + "</tbody></table>";
+}
+
+/* ---------------------------------------------------------------- KPIs */
+function renderKPIs() {
+  const k = DATA.kpis;
+  document.getElementById("intro").textContent =
+    `${fmt0(DATA.meta.n_clean)} apartment sales registered from April 2006 to March 2026, cleaned of non-market deals, ` +
+    `with quality-adjusted price indices, maps, models of what drives price, and a price calculator.`;
+  const tiles = [
+    ["Median resale price, 2025", `${fmt0(k.median_2025)}`, "PLN per m²"],
+    ["Price growth 2015–2025", `+${fmt1(k.growth_2015_2025)}%`, `${fmt1(k.cagr_2015_2025)}% a year, quality-adjusted`],
+    ["After inflation", `+${fmt1(k.real_growth_2015_2025)}%`, "2015–2025, deflated by consumer prices"],
+    [`Since the ${qLabel(k.peak_q)} peak`, `${sgn(k.since_peak, 1)}%`, `${sgn(k.real_since_peak, 1)}% after inflation, to ${qLabel(k.last_q)}`],
+    ["Sales registered in 2025", fmt0(k.sales_2025), `${fmt0(k.sales_2025_secondary)} resales · ${fmt0(k.sales_2025_developer)} from developers · ${fmt0(k.sales_2025 - k.sales_2025_secondary - k.sales_2025_developer)} other first sales`],
+  ];
+  document.getElementById("kpis").innerHTML = tiles.map(([l, v, s]) =>
+    `<div class="kpi"><span class="label">${l}</span><span class="value">${v}</span><span class="sub">${s}</span></div>`).join("");
+}
+
+/* ---------------------------------------------------------------- line chart */
+function lineChart(container, cfg) {
+  const { x, series, yFmt, baseline, tipFmt } = cfg;
+  const width = container.clientWidth || 800, height = Math.max(260, Math.min(420, width * 0.48));
+  const m = { t: 12, r: 64, b: 28, l: 48 };
+  container.querySelectorAll("svg").forEach(s => s.remove());
+  const svg = d3.select(container).insert("svg", ":first-child").attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("role", "img").attr("aria-label", cfg.aria || "Line chart");
+  const dates = x.map(qDate);
+  const visible = series.filter(s => !s.hidden);
+  const all = visible.flatMap(s => [...s.values, ...(s.lo || []), ...(s.hi || [])].filter(v => v != null));
+  const lo = Math.min(baseline ?? Infinity, d3.min(all)), hi = d3.max(all);
+  const xs = d3.scaleTime().domain(d3.extent(dates)).range([m.l, width - m.r]);
+  const ys = d3.scaleLinear().domain([lo - (hi - lo) * 0.04, hi + (hi - lo) * 0.06]).nice().range([height - m.b, m.t]);
+  const grid = css("--grid"), axis = css("--axis"), muted = css("--muted"), ink2 = css("--ink-2");
+  const g = svg.append("g");
+  g.selectAll("line.gy").data(ys.ticks(6)).join("line").attr("x1", m.l).attr("x2", width - m.r)
+    .attr("y1", d => ys(d)).attr("y2", d => ys(d)).attr("stroke", grid).attr("stroke-width", 1);
+  g.selectAll("text.ty").data(ys.ticks(6)).join("text").attr("x", m.l - 8).attr("y", d => ys(d)).attr("dy", "0.32em")
+    .attr("text-anchor", "end").attr("font-size", 11.5).attr("fill", muted).attr("class", "num").text(yFmt);
+  const [y0, y1] = d3.extent(dates).map(d => d.getFullYear());
+  const step = (y1 - y0) > 10 ? (width < 560 ? 4 : 2) : 1;
+  const years = d3.range(Math.ceil((y0 + 1) / step) * step, y1 + 1, step);
+  g.selectAll("text.tx").data(years).join("text").attr("x", d => xs(new Date(d, 0, 1))).attr("y", height - 8)
+    .attr("text-anchor", "middle").attr("font-size", 11.5).attr("fill", muted).text(d => d);
+  (cfg.bands || []).forEach(b => {
+    const q0 = b.from, q1 = b.to;
+    const x0 = Math.max(m.l, xs(new Date(+q0.slice(0, 4), (+q0.slice(5) - 1) * 3, 1)));
+    const x1 = Math.min(width - m.r, xs(new Date(+q1.slice(0, 4), +q1.slice(5) * 3, 1)));
+    if (x1 <= x0) return;
+    g.append("rect").attr("x", x0).attr("y", m.t).attr("width", x1 - x0).attr("height", height - m.t - m.b).attr("fill", css("--surface-2"));
+    g.append("text").attr("x", x0 + 3).attr("y", m.t + 11).attr("font-size", 10.5).attr("fill", muted).text(b.name);
+  });
+  if (baseline != null) g.append("line").attr("x1", m.l).attr("x2", width - m.r).attr("y1", ys(baseline)).attr("y2", ys(baseline)).attr("stroke", axis).attr("stroke-width", 1.2);
+  const line = d3.line().defined(d => d[1] != null).x(d => xs(d[0])).y(d => ys(d[1])).curve(d3.curveMonotoneX);
+  visible.filter(s => s.lo && s.hi).forEach(s => {
+    const area = d3.area().defined((d, i) => s.lo[i] != null && s.hi[i] != null).x(d => xs(d)).y0((d, i) => ys(s.lo[i])).y1((d, i) => ys(s.hi[i]));
+    g.append("path").attr("d", area(dates)).attr("fill", css(s.color)).attr("fill-opacity", 0.12);
+  });
+  visible.slice().reverse().forEach(s => {
+    g.append("path").attr("d", line(dates.map((d, i) => [d, s.values[i]]))).attr("fill", "none")
+      .attr("stroke", css(s.color)).attr("stroke-width", s.width || 2).attr("stroke-linejoin", "round").attr("stroke-linecap", "round")
+      .attr("stroke-dasharray", s.dash || null);
+  });
+  // end labels for series flagged `label` (kept sparse to avoid collisions)
+  visible.filter(s => s.label).forEach(s => {
+    const i = s.values.length - 1 - [...s.values].reverse().findIndex(v => v != null);
+    g.append("circle").attr("cx", xs(dates[i])).attr("cy", ys(s.values[i])).attr("r", 4).attr("fill", css(s.color)).attr("stroke", css("--surface")).attr("stroke-width", 2);
+    g.append("text").attr("x", xs(dates[i]) + 8).attr("y", ys(s.values[i])).attr("dy", "0.32em").attr("font-size", 12)
+      .attr("fill", ink2).attr("class", "num").text(yFmt(s.values[i]));
+  });
+  // crosshair + tooltip
+  const tip = tooltipFor(container);
+  const cross = g.append("line").attr("y1", m.t).attr("y2", height - m.b).attr("stroke", axis).attr("visibility", "hidden");
+  const dots = g.append("g");
+  svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", width - m.l - m.r).attr("height", height - m.t - m.b)
+    .attr("fill", "transparent")
+    .on("pointermove", ev => {
+      const [px] = d3.pointer(ev);
+      const t = xs.invert(px);
+      const i = d3.minIndex(dates, d => Math.abs(d - t));
+      cross.attr("x1", xs(dates[i])).attr("x2", xs(dates[i])).attr("visibility", "visible");
+      dots.selectAll("circle").data(visible.filter(s => s.values[i] != null)).join("circle")
+        .attr("cx", xs(dates[i])).attr("cy", s => ys(s.values[i])).attr("r", 4.5).attr("fill", s => css(s.color))
+        .attr("stroke", css("--surface")).attr("stroke-width", 2);
+      const rows = visible.filter(s => s.values[i] != null).map(s =>
+        `<div class="t-row"><span><i class="dot" style="background:${css(s.color)}"></i>${s.name}</span><b class="num">${(tipFmt || yFmt)(s.values[i])}</b></div>`).join("");
+      const rect = container.getBoundingClientRect(), sv = svg.node().getBoundingClientRect();
+      const scale = sv.width / width;
+      tip.show(`<div class="t-head">${qLabel(x[i])}</div>${rows}`, xs(dates[i]) * scale + (sv.left - rect.left), ev.clientY - rect.top);
+    })
+    .on("pointerleave", () => { cross.attr("visibility", "hidden"); dots.selectAll("circle").remove(); tip.hide(); });
+}
+
+/* ---------------------------------------------------------------- index section */
+const INDEX_VIEWS = {
+  methods: {
+    series: [
+      { key: "hedonic", name: "Hedonic (headline)", color: "--s1", width: 2.6, label: true },
+      { key: "repeat_sales", name: "Repeat sales", color: "--s2" },
+      { key: "mix_adjusted", name: "Mix-adjusted", color: "--s3" },
+      { key: "median", name: "Median", color: "--s4" },
+      { key: "nbp_hedonic", name: "NBP hedonic (benchmark)", color: "--deemph", width: 1.6, label: true },
+    ], yFmt: v => nf0.format(v), baseline: 100,
+    note: "Resale market. Four methods on the register data agree within a few points. NBP's index, built from agent-reported data, rises less after 2016.",
+  },
+  real: {
+    series: [
+      { key: "hedonic", name: "Nominal", color: "--s1", label: true },
+      { key: "hedonic_real", name: "Real (after inflation)", color: "--s2", label: true },
+    ], yFmt: v => nf0.format(v), baseline: 100,
+    note: "Resale hedonic index; real = nominal ÷ consumer price index (HICP Poland). In real terms prices are only slightly above the 2007 peak.",
+  },
+  yoy: {
+    series: [
+      { key: "yoy_hedonic", name: "Register (hedonic)", color: "--s1", label: true },
+      { key: "yoy_nbp", name: "NBP hedonic", color: "--deemph", width: 1.6 },
+    ], yFmt: v => (v > 0 ? "+" : "") + nf0.format(v) + "%", tipFmt: v => (v > 0 ? "+" : "") + nf1.format(v) + "%", baseline: 0,
+    note: "Year-on-year change of the resale hedonic index.",
+  },
+  primary: {
+    series: [
+      { key: "hedonic", name: "Resale, hedonic", color: "--s1", label: true },
+      { key: "primary_hedonic", name: "Developer, hedonic", color: "--s2", label: true },
+      { key: "primary_median", name: "Developer, raw median", color: "--deemph", width: 1.6 },
+    ], yFmt: v => nf0.format(v), baseline: 100,
+    note: "Developer prices are recorded at the final deed, 1–3 years after the price was agreed, so they lag. The raw median jumps when a wave of small flats is completed.",
+  },
+};
+let indexView = "methods";
+const hiddenSeries = {};
+function renderIndex() {
+  const v = INDEX_VIEWS[indexView], ix = DATA.indices;
+  const series = v.series.map(s => ({ ...s, values: ix[s.key], hidden: !!hiddenSeries[indexView + s.key] }));
+  const legend = document.getElementById("index-legend");
+  legend.innerHTML = "";
+  series.forEach(s => {
+    const b = el("button", { type: "button", "aria-pressed": String(!s.hidden) },
+      `<i class="swatch" style="background:${css(s.color)}"></i>${s.name}`);
+    b.onclick = () => { hiddenSeries[indexView + s.key] = !hiddenSeries[indexView + s.key]; renderIndex(); };
+    legend.appendChild(b);
+  });
+  lineChart(document.getElementById("index-chart"), { x: ix.q, series, yFmt: v.yFmt, tipFmt: v.tipFmt, baseline: v.baseline, aria: "Price index chart" });
+  document.getElementById("index-note").textContent = v.note;
+  const rows = ix.q.map((q, i) => [qLabel(q), ...v.series.map(s => ix[s.key][i] == null ? "–" : (v.tipFmt || v.yFmt)(ix[s.key][i]))]);
+  document.getElementById("index-table").innerHTML = tableHTML(["Quarter", ...v.series.map(s => s.name)], rows);
+}
+document.querySelectorAll("#index-view button").forEach(b => b.onclick = () => {
+  indexView = b.dataset.view;
+  document.querySelectorAll("#index-view button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  renderIndex();
+});
+
+/* ---------------------------------------------------------------- map */
+const MAP_LAYERS = {
+  price: { title: "Price level, resale 2024–25", desc: "Median price per m² in hexagons with at least 10 resales.",
+    value: c => DATA.map.price[c]?.[0], n: c => DATA.map.price[c]?.[1], scale: "seq", fmt: v => fmt0(v) + " PLN/m²",
+    tip: c => `Median ${fmt0(DATA.map.price[c][0])} PLN/m²<br>${fmt0(DATA.map.price[c][1])} sales` },
+  growth: { title: "Growth compared with Warsaw", desc: "Change in median price 2016–17 to 2024–25, minus Warsaw's change, in percentage points. Red grew faster.",
+    value: c => DATA.map.growth[c]?.[0], n: c => DATA.map.growth[c]?.[3], scale: "div", fmt: v => sgn(v) + " pp",
+    tip: c => `Growth ${sgn(DATA.map.growth[c][1])}%<br>${sgn(DATA.map.growth[c][0], 1)} pp vs Warsaw<br>${DATA.map.growth[c][2]} → ${DATA.map.growth[c][3]} sales` },
+  location: { title: "Location value (model)", desc: "What the location adds to price per m² once the flat's own features are held constant, vs the Warsaw average.",
+    value: c => DATA.map.location[c]?.[0], n: c => DATA.map.location[c]?.[1], scale: "div", fmt: v => sgn(v) + "%",
+    tip: c => `Location premium ${sgn(DATA.map.location[c][0], 1)}%<br>${fmt0(DATA.map.location[c][1])} sales 2023–26` },
+};
+let mapLayer = "price", pickedCell = null;
+function renderMap() {
+  const L = MAP_LAYERS[mapLayer], M = DATA.map;
+  const container = document.getElementById("map-chart");
+  const width = container.clientWidth || 700, height = width * 0.98;
+  const lat0 = 52.23, k = Math.cos(lat0 * Math.PI / 180);
+  const pts = M.districts.features.flatMap(f => (f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates).flat(2));
+  const xs0 = pts.map(p => p[0] * k), ys0 = pts.map(p => -p[1]);
+  const minX = Math.min(...xs0), maxX = Math.max(...xs0), minY = Math.min(...ys0), maxY = Math.max(...ys0);
+  const s = Math.min((width - 16) / (maxX - minX), (height - 16) / (maxY - minY));
+  const ox = (width - (maxX - minX) * s) / 2, oy = (height - (maxY - minY) * s) / 2;
+  const P = ([lon, lat]) => [ox + (lon * k - minX) * s, oy + (-lat - minY) * s];
+  const ring = r => "M" + r.map(p => P(p).map(v => v.toFixed(1)).join(",")).join("L") + "Z";
+  const geoPath = f => (f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates).map(poly => poly.map(ring).join("")).join("");
+
+  container.querySelectorAll("svg").forEach(x => x.remove());
+  const svg = d3.select(container).insert("svg", ":first-child").attr("viewBox", `0 0 ${width} ${height}`).attr("role", "img").attr("aria-label", L.title);
+  const cells = Object.keys(M.hexes).filter(c => L.value(c) != null);
+  const vals = cells.map(L.value);
+  let color;
+  if (L.scale === "seq") {
+    const [a, b] = [d3.quantile(vals, 0.02), d3.quantile(vals, 0.98)];
+    const ramp = ["--seq-0", "--seq-1", "--seq-2", "--seq-3", "--seq-4"].map(css);
+    color = d3.scaleLinear().domain(d3.range(5).map(i => a + (b - a) * i / 4)).range(ramp).clamp(true);
+    setRamp(ramp, [a, b], L.fmt);
+  } else {
+    const lim = d3.quantile(vals.map(Math.abs), 0.95);
+    const ramp = ["--div-neg", "--div-neg2", "--div-neg3", "--div-mid", "--div-pos3", "--div-pos2", "--div-pos"].map(css);
+    color = d3.scaleLinear().domain(d3.range(7).map(i => -lim + lim * i / 3)).range(ramp).clamp(true);
+    setRamp(ramp, [-lim, lim], L.fmt);
+  }
+  svg.append("g").selectAll("path").data(M.vistula.features).join("path").attr("d", geoPath).attr("fill", css("--river")).attr("stroke", "none");
+  const tip = tooltipFor(container);
+  svg.append("g").selectAll("path").data(cells).join("path")
+    .attr("d", c => ring(M.hexes[c])).attr("fill", c => color(L.value(c)))
+    .attr("stroke", c => c === pickedCell ? css("--ink") : css("--surface")).attr("stroke-width", c => c === pickedCell ? 2.5 : 0.8)
+    .style("cursor", "pointer")
+    .on("pointermove", (ev, c) => {
+      const r = container.getBoundingClientRect();
+      tip.show(`<div class="t-head">${M.cell_district[c] || "Warsaw"}</div>${L.tip(c)}`, ev.clientX - r.left, ev.clientY - r.top);
+    })
+    .on("pointerleave", () => tip.hide())
+    .on("click", (ev, c) => pickCell(c));
+  svg.append("g").selectAll("path").data(M.districts.features).join("path").attr("d", geoPath)
+    .attr("fill", "none").attr("stroke", css("--district-line")).attr("stroke-width", 0.9).attr("pointer-events", "none");
+  document.getElementById("map-title").textContent = L.title;
+  document.getElementById("map-desc").textContent = L.desc;
+  const rows = cells.map(c => [c, M.cell_district[c] || "", L.fmt(L.value(c)), fmt0(L.n(c))]).sort((a, b) => a[1].localeCompare(b[1]));
+  document.getElementById("map-table").innerHTML = tableHTML(["H3 cell", "District", "Value", "Sales"], rows);
+}
+function setRamp(colors, [a, b], fmt) {
+  document.getElementById("map-ramp").style.background = `linear-gradient(90deg, ${colors.join(",")})`;
+  document.getElementById("map-ramp-labels").innerHTML = `<span class="num">${fmt(a)}</span><span class="num">${fmt((a + b) / 2)}</span><span class="num">${fmt(b)}</span>`;
+}
+function pickCell(c) {
+  pickedCell = c;
+  const C = DATA.calculator, M = DATA.map, d = M.cell_district[c];
+  const box = document.getElementById("map-picked");
+  if (C.cells[c]) {
+    calcState.cell = c; document.getElementById("c-district").value = C.cells[c][2];
+    box.innerHTML = `<b>Selected:</b> hexagon in ${d}. The calculator now prices this spot. <a href="#calculator">See the estimate</a> · <button class="btn-link" type="button" id="unpick">Clear</button>`;
+  } else {
+    calcState.cell = null; if (d) document.getElementById("c-district").value = d;
+    box.innerHTML = `<b>Selected:</b> hexagon in ${d || "Warsaw"}. Too few recent sales to price this exact spot; the calculator uses the district average. <button class="btn-link" type="button" id="unpick">Clear</button>`;
+  }
+  document.getElementById("unpick").onclick = () => { pickedCell = null; calcState.cell = null; document.getElementById("map-picked").textContent = "Click a hexagon to select it."; renderMap(); renderCalc(); };
+  renderMap(); renderCalc();
+}
+document.querySelectorAll("#map-view button").forEach(b => b.onclick = () => {
+  mapLayer = b.dataset.layer;
+  document.querySelectorAll("#map-view button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  renderMap();
+});
+
+/* ---------------------------------------------------------------- districts */
+let distSort = { key: "median_2025", dir: -1 };
+function sparkline(series, city) {
+  const w = 120, h = 30, all = series.concat(city).filter(v => v != null);
+  const lo = Math.min(...all), hi = Math.max(...all);
+  const X = i => 2 + i * (w - 6) / (series.length - 1), Y = v => h - 3 - (v - lo) / (hi - lo) * (h - 6);
+  const path = arr => arr.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + "," + Y(v).toFixed(1)).join("");
+  const n = series.length - 1;
+  return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true">
+    <path d="${path(city)}" fill="none" stroke="${css("--deemph")}" stroke-width="1.4"/>
+    <path d="${path(series)}" fill="none" stroke="${css("--s1")}" stroke-width="1.8"/>
+    <circle cx="${X(n)}" cy="${Y(series[n])}" r="2.8" fill="${css("--s1")}"/></svg>`;
+}
+function renderDistricts() {
+  const rows = DATA.districts.slice().sort((a, b) => distSort.dir * (a[distSort.key] > b[distSort.key] ? 1 : a[distSort.key] < b[distSort.key] ? -1 : 0));
+  const city = DATA.districts_city;
+  const cols = [["district", "District"], ["median_2025", "Median 2025, PLN/m²"], ["n_2025", "Resales 2025"],
+    ["median_growth", "Growth 2016–25, median"], ["hedonic_growth", "Growth 2015–25, quality-adjusted"], [null, "Index 2006–2025"]];
+  const head = "<tr>" + cols.map(([k, l]) => k ? `<th><button type="button" data-k="${k}">${l}${distSort.key === k ? (distSort.dir > 0 ? " ↑" : " ↓") : ""}</button></th>` : `<th>${l}</th>`).join("") + "</tr>";
+  const body = rows.map(r => `<tr><td>${r.district}</td><td>${fmt0(r.median_2025)}</td><td>${fmt0(r.n_2025)}</td>
+    <td>${sgn(r.median_growth)}%</td><td>${sgn(r.hedonic_growth)}%</td><td>${sparkline(r.series, city)}</td></tr>`).join("");
+  const box = document.getElementById("district-table");
+  box.innerHTML = `<table><thead>${head}</thead><tbody>${body}</tbody></table>`;
+  box.querySelectorAll("th button").forEach(b => b.onclick = () => {
+    const k = b.dataset.k; distSort = { key: k, dir: distSort.key === k ? -distSort.dir : (k === "district" ? 1 : -1) }; renderDistricts();
+  });
+}
+
+/* ---------------------------------------------------------------- dot-whisker & bars */
+function dotWhisker(container, rows, colorVar) {
+  const width = container.clientWidth || 500, rowH = 26, m = { t: 8, r: 16, b: 26, l: Math.min(230, width * 0.46) };
+  const height = m.t + m.b + rows.length * rowH;
+  container.querySelectorAll("svg").forEach(s => s.remove());
+  const svg = d3.select(container).insert("svg", ":first-child").attr("viewBox", `0 0 ${width} ${height}`).attr("role", "img");
+  const ext = d3.extent(rows.flatMap(r => [r.lo, r.hi]).concat([0]));
+  const xs = d3.scaleLinear().domain(ext).nice().range([m.l, width - m.r]);
+  const y = i => m.t + i * rowH + rowH / 2;
+  const muted = css("--muted"), ink2 = css("--ink-2"), c = css(colorVar);
+  svg.selectAll("line.g").data(xs.ticks(5)).join("line").attr("x1", d => xs(d)).attr("x2", d => xs(d)).attr("y1", m.t).attr("y2", height - m.b).attr("stroke", css("--grid"));
+  svg.append("line").attr("x1", xs(0)).attr("x2", xs(0)).attr("y1", m.t).attr("y2", height - m.b).attr("stroke", css("--axis")).attr("stroke-width", 1.4);
+  svg.selectAll("text.t").data(xs.ticks(5)).join("text").attr("x", d => xs(d)).attr("y", height - 8).attr("text-anchor", "middle")
+    .attr("font-size", 11).attr("fill", muted).attr("class", "num").text(d => (d > 0 ? "+" : "") + d + "%");
+  const tip = tooltipFor(container);
+  const g = svg.selectAll("g.r").data(rows).join("g");
+  g.append("text").attr("x", m.l - 10).attr("y", (d, i) => y(i)).attr("dy", "0.32em").attr("text-anchor", "end").attr("font-size", 12).attr("fill", ink2).text(d => d.label);
+  g.append("line").attr("x1", d => xs(d.lo)).attr("x2", d => xs(d.hi)).attr("y1", (d, i) => y(i)).attr("y2", (d, i) => y(i)).attr("stroke", c).attr("stroke-opacity", 0.45).attr("stroke-width", 3).attr("stroke-linecap", "round");
+  g.append("circle").attr("cx", d => xs(d.pct)).attr("cy", (d, i) => y(i)).attr("r", 5).attr("fill", c).attr("stroke", css("--surface")).attr("stroke-width", 2);
+  g.append("rect").attr("x", 0).attr("width", width).attr("y", (d, i) => y(i) - rowH / 2).attr("height", rowH).attr("fill", "transparent")
+    .on("pointermove", (ev, d) => { const r = container.getBoundingClientRect(); tip.show(`<div class="t-head">${d.label}</div>${sgn(d.pct, 1)}% <span style="color:var(--muted)">(95% CI ${sgn(d.lo, 1)} to ${sgn(d.hi, 1)})</span>`, ev.clientX - r.left, ev.clientY - r.top); })
+    .on("pointerleave", () => tip.hide());
+}
+function barChart(container, rows, colorVar, fmt) {
+  const width = container.clientWidth || 500, rowH = 24, m = { t: 4, r: 56, b: 6, l: Math.min(220, width * 0.46) };
+  const height = m.t + m.b + rows.length * rowH;
+  container.querySelectorAll("svg").forEach(s => s.remove());
+  const svg = d3.select(container).insert("svg", ":first-child").attr("viewBox", `0 0 ${width} ${height}`).attr("role", "img");
+  const xs = d3.scaleLinear().domain([0, d3.max(rows, r => r.value)]).range([m.l, width - m.r]);
+  const y = i => m.t + i * rowH;
+  const g = svg.selectAll("g").data(rows).join("g");
+  g.append("text").attr("x", m.l - 10).attr("y", (d, i) => y(i) + rowH / 2).attr("dy", "0.32em").attr("text-anchor", "end").attr("font-size", 12).attr("fill", css("--ink-2")).text(d => d.label);
+  g.append("rect").attr("x", m.l).attr("y", (d, i) => y(i) + 5).attr("height", rowH - 10).attr("rx", 3)
+    .attr("width", d => Math.max(1, xs(d.value) - m.l)).attr("fill", css(colorVar));
+  g.append("text").attr("x", d => xs(d.value) + 6).attr("y", (d, i) => y(i) + rowH / 2).attr("dy", "0.32em").attr("font-size", 11.5).attr("fill", css("--ink-2")).attr("class", "num").text(d => d.text ?? fmt(d.value));
+}
+const FEATURE_NAMES = { area_m2: "Floor area", rooms: "Rooms", floor: "Floor", storeys: "Building storeys", floor_rel: "Floor within building",
+  footprint_m2: "Building footprint", age_at_sale: "Building age (new builds)", dist_centre_km: "Distance to centre", dist_metro_km: "Distance to metro",
+  dist_park_km: "Distance to park", dist_forest_km: "Distance to forest", dist_vistula_km: "Distance to Vistula", dist_rail_km: "Distance to rail station",
+  n_stops_500m: "Bus/tram stops nearby", x_2180: "Position west–east", y_2180: "Position south–north", is_top_floor: "Top floor",
+  has_ancillary_area: "Cellar / storage", right_bank: "Right bank", segment: "Resale vs developer", district: "District",
+  height_class: "Building height class", building_function: "Building type", vintage: "Built 2007+ or older",
+  nbhd_rel: "Local price level (past year)", nbhd_n: "Number of local sales", nbhd_median_dist_m: "Distance to local comparables" };
+const MODEL_NAMES = { hedonic_A: "Hedonic regression, location variables", hedonic_B: "Hedonic regression, area fixed effects",
+  gbm: "Gradient boosting", gbm_nbhd: "Gradient boosting + local prices" };
+function renderModels() {
+  const Mo = DATA.models;
+  dotWhisker(document.getElementById("unit-chart"), Mo.unit, "--s1");
+  dotWhisker(document.getElementById("loc-chart"), Mo.location, "--s2");
+  const t = r => [r.label, sgn(r.pct, 1) + "%", sgn(r.lo, 1) + "%", sgn(r.hi, 1) + "%"];
+  document.getElementById("unit-table").innerHTML = tableHTML(["Effect", "Estimate", "95% CI low", "95% CI high"], Mo.unit.map(t));
+  document.getElementById("loc-table").innerHTML = tableHTML(["Effect", "Estimate", "95% CI low", "95% CI high"], Mo.location.map(t));
+  const best = {};
+  Mo.avm.forEach(r => { const s = r.scheme.slice(0, 4); if (!best[s] || r.mdape < best[s].mdape) best[s] = r; });
+  const scheme = s => s.startsWith("temporal") ? "Future sales" : "Unseen areas";
+  document.getElementById("avm-table").innerHTML = "<table><thead><tr><th>Model</th><th>Test</th><th>Median error</th><th>Within ±10%</th><th>Within ±20%</th></tr></thead><tbody>" +
+    Mo.avm.map(r => `<tr class="${best[r.scheme.slice(0, 4)] === r ? "best" : ""}"><td>${MODEL_NAMES[r.model]}</td><td>${scheme(r.scheme)}</td><td>${fmt1(r.mdape)}%</td><td>${fmt0(r.w10)}%</td><td>${fmt0(r.w20)}%</td></tr>`).join("") + "</tbody></table>";
+  barChart(document.getElementById("imp-chart"), Mo.importance.map(r => ({ label: FEATURE_NAMES[r.feature] || r.feature, value: r.value })), "--s1", v => nf1.format(v));
+}
+
+/* ---------------------------------------------------------------- calculator */
+const calcState = { cell: null };
+function renderCalc() {
+  const C = DATA.calculator, b = C.beta;
+  const district = document.getElementById("c-district").value;
+  const area = Math.min(300, Math.max(15, +document.getElementById("c-area").value || 52));
+  const rooms = +document.getElementById("c-rooms").value, floor = document.getElementById("c-floor").value;
+  const height = document.getElementById("c-height").value, age = document.getElementById("c-age").value;
+  const dev = document.getElementById("c-seg").value === "developer";
+  const top = document.getElementById("c-top").checked, cellar = document.getElementById("c-cellar").checked;
+  const useCell = calcState.cell && C.cells[calcState.cell] && C.cells[calcState.cell][2] === district;
+  const fe = useCell ? C.cells[calcState.cell][0] : C.district_fe[district];
+  const la = Math.log(area);
+  const terms = [
+    ["Floor area", b.log_area * la + b.log_area_sq * (la - Math.log(50)) ** 2 - (b.log_area * Math.log(50))],
+    ["Rooms", rooms === 2 ? 0 : (b[{ 1: "rooms_1", 3: "rooms_3", 4: "rooms_4", 5: "rooms_5p" }[rooms]] || 0)],
+    ["Floor", floor === "base" ? 0 : floor === "ground" ? b.floor_ground : b[floor]],
+    ["Top floor", top ? b.top_floor : 0],
+    ["Building height", height === "mid" ? b.height_mid : height === "high" ? b.height_high : 0],
+    ["Building age", age === "old" ? 0 : b[age]],
+    ["Cellar / storage", cellar ? b.ancillary : 0],
+    ["From developer", dev ? b.primary_developer + C.delta_last.primary_developer - C.delta_last.secondary : 0],
+  ];
+  const logp = fe + C.delta_last.secondary + b.log_area * Math.log(50) + terms.reduce((s, t) => s + t[1], 0);
+  const pm2 = Math.exp(logp) * C.smearing, total = pm2 * area;
+  const locPct = (Math.exp(fe - C.fe_ref) - 1) * 100;
+  const r10 = [total * 0.9, total * 1.1], r20 = [total * 0.8, total * 1.2];
+  const pos = v => ((v - r20[0] * 0.95) / (r20[1] * 1.05 - r20[0] * 0.95) * 100).toFixed(1) + "%";
+  const acc = C.accuracy;
+  document.getElementById("calc-result").innerHTML = `
+    <div class="eyebrow">Estimated price, ${qLabel(C.quarter)}</div>
+    <div><span class="big num">${fmt0(Math.round(pm2 / 10) * 10)}</span> <span>PLN per m²</span></div>
+    <div class="total num">≈ ${fmt0(Math.round(total / 1000) * 1000)} PLN for ${fmt0(area)} m²</div>
+    <div class="band" aria-hidden="true"><div class="b20" style="left:${pos(r20[0])};width:calc(${pos(r20[1])} - ${pos(r20[0])})"></div>
+      <div class="b10" style="left:${pos(r10[0])};width:calc(${pos(r10[1])} - ${pos(r10[0])})"></div><div class="mid" style="left:${pos(total)}"></div></div>
+    <p class="panel-note">Tested on 2025–26 sales, this model came within ±10% for ${fmt0(acc.w10)}% of flats
+      (${fmt0(Math.round(r10[0] / 1000) * 1000)}–${fmt0(Math.round(r10[1] / 1000) * 1000)} PLN) and within ±20% for ${fmt0(acc.w20)}%
+      (${fmt0(Math.round(r20[0] / 1000) * 1000)}–${fmt0(Math.round(r20[1] / 1000) * 1000)} PLN).</p>
+    <div class="contrib">
+      <div><span>Location: ${useCell ? "selected hexagon" : "typical for " + district}</span><span>${sgn(locPct, 1)}% vs Warsaw</span></div>
+      ${terms.filter(t => t[0] !== "Floor area" && Math.abs(t[1]) > 1e-9).map(t => `<div><span>${t[0]}</span><span>${sgn((Math.exp(t[1]) - 1) * 100, 1)}%</span></div>`).join("")}
+    </div>`;
+}
+function initCalc() {
+  const C = DATA.calculator, sel = document.getElementById("c-district");
+  Object.keys(C.district_fe).sort((a, b) => a.localeCompare(b, "pl")).forEach(d => sel.appendChild(el("option", { value: d }, d)));
+  sel.value = "Mokotów";
+  document.getElementById("calc-quarter").textContent = qLabel(C.quarter);
+  document.getElementById("calc-window").textContent = qLabel(C.window[0]) + " to " + qLabel(C.window[1]);
+  document.querySelectorAll("#calc-form input, #calc-form select").forEach(x => x.addEventListener("input", () => {
+    if (x.id === "c-district" && calcState.cell && C.cells[calcState.cell][2] !== x.value) calcState.cell = null;
+    renderCalc();
+  }));
+  renderCalc();
+}
+
+/* ---------------------------------------------------------------- method */
+function renderMethod() {
+  const rows = DATA.cleaning, start = DATA.meta.n_apartments_raw;
+  const top = rows.slice().sort((a, b) => b.removed - a.removed).slice(0, 6);
+  document.getElementById("funnel").innerHTML =
+    `<div class="row"><span>Apartment sales in the register</span><span class="num" style="text-align:right">${fmt0(start)}</span></div>` +
+    top.map(r => `<div class="row"><span style="color:var(--ink-2)">− ${r.rule}</span><span class="num" style="text-align:right">${fmt0(r.removed)}</span></div>`).join("") +
+    `<div class="row"><span style="color:var(--ink-2)">− other rules</span><span class="num" style="text-align:right">${fmt0(start - DATA.meta.n_clean - top.reduce((s, r) => s + r.removed, 0))}</span></div>` +
+    `<div class="row"><b>Kept for analysis</b><b class="num" style="text-align:right">${fmt0(DATA.meta.n_clean)}</b></div>` +
+    `<div class="row"><div class="bar" style="width:${(DATA.meta.n_clean / start * 100).toFixed(1)}%"></div><span class="num" style="text-align:right">${nf1.format(DATA.meta.n_clean / start * 100)}%</span></div>`;
+  document.getElementById("nbp-growth").textContent = fmt0(DATA.kpis.nbp_growth_2015_2025);
+  document.getElementById("our-growth").textContent = fmt0(DATA.kpis.growth_2015_2025);
+  document.getElementById("drivers-n").textContent = fmt0(DATA.models.fit[0].n);
+  document.getElementById("footer").innerHTML = `Built ${DATA.meta.built} from the Warsaw RCN register and public data (GUGiK, NBP, Eurostat). ` +
+    `Figures are statistical estimates from registered transactions.`;
+}
+
+/* ---------------------------------------------------------------- boot */
+/* ---------------------------------------------------------------- affordability */
+const AFF_VIEWS = {
+  years_of_wages: { name: "Years of gross wages for a 50 m² flat", fmt: v => nf1.format(v) + " yrs", color: "--s1",
+    note: "Prices outran wages from 2016 to 2024; since the 2024 peak wages have kept rising 9–11% a year while prices were flat." },
+  m2_per_wage: { name: "m² bought with one monthly gross wage", fmt: v => v.toFixed(2) + " m²", color: "--s1",
+    note: "The same measure turned around: higher is more affordable." },
+  payment_share: { name: "Mortgage payment as % of a gross monthly wage", fmt: v => nf0.format(v) + "%", color: "--s2",
+    note: "Rates drive this measure: the burden doubled in 2022 without prices jumping, and falls as rates are cut. Before 2009 many loans were in Swiss francs, so this overstates that period." },
+};
+let affView = "years_of_wages";
+function renderAffordability() {
+  const M = DATA.macro, v = AFF_VIEWS[affView];
+  document.getElementById("aff-wage").textContent = fmt0(M.wage_last);
+  document.getElementById("aff-wage-q").textContent = qLabel(M.q[M.q.length - 1]);
+  lineChart(document.getElementById("aff-chart"), { x: M.q, series: [{ key: affView, name: v.name, values: M[affView], color: v.color, label: true }],
+    yFmt: v.fmt, bands: M.events, aria: v.name });
+  document.getElementById("aff-note").textContent = v.note;
+  document.getElementById("aff-table").innerHTML = tableHTML(["Quarter", "Years of wages", "m² per wage", "Payment share", "Mortgage rate"],
+    M.q.map((q, i) => [qLabel(q), nf1.format(M.years_of_wages[i]), M.m2_per_wage[i].toFixed(2), nf0.format(M.payment_share[i]) + "%", nf1.format(M.mortgage_rate[i]) + "%"]));
+  barChart(document.getElementById("aff-district"), M.districts.map(d => ({ label: d.district, value: d.years, text: `${nf1.format(d.years)} yrs · ${nf0.format(d.payment)}%` })), "--s1", v => nf1.format(v));
+  const bandKeys = Object.keys(M.bands).filter(k => k !== "q"), colors = ["--s1", "--s2", "--s3"];
+  // lines converge at the end -> the legend above carries identity (no end labels)
+  const series = bandKeys.map((k, i) => ({ key: k, name: k, values: M.bands[k], color: colors[i] }));
+  document.getElementById("bk2-legend").innerHTML = series.map(s => `<span style="display:inline-flex;align-items:center;gap:7px;color:var(--ink-2)"><i class="swatch" style="background:${css(s.color)}"></i>${s.name}</span>`).join("");
+  lineChart(document.getElementById("bk2-chart"), { x: M.bands.q, series, yFmt: v => nf0.format(v), baseline: 100,
+    bands: M.events.filter(e => e.name.startsWith("Bezpieczny")), aria: "Price index by flat size" });
+  const gap = M.did["small − large (pp)"];
+  document.getElementById("bk2-note").textContent = `Resale hedonic index, 2023Q2 = 100. Small flats minus large: ${sgn(gap[0], 1)} pp in the year before, ` +
+    `${sgn(gap[1], 1)} pp during the programme, ${sgn(gap[2], 1)} pp the year after. The share of resales at or under PLN 700k fell from ${M.cap_share["2023Q2"]}% to ${M.cap_share["2024Q2"]}%.`;
+  document.getElementById("bk2-table").innerHTML = tableHTML(["Flat size", ...M.did_periods], Object.entries(M.did).map(([k, v]) => [k, ...v.map(x => sgn(x, 1) + (k.includes("pp") ? " pp" : "%"))]));
+  const specs = [...new Set(M.regression.map(r => r.spec))];
+  const TERM = t => t.startsWith("mortgage_rate_change") ? `Mortgage rate change (1 pp), ${t.slice(-1)} quarters earlier` :
+    t.startsWith("wage_growth") ? "Wage growth (1 pp)" : t.startsWith("sales_growth") ? "Sales growth (1 pp), 2 quarters earlier" :
+    t === "bk2_programme" ? "Bezpieczny Kredyt 2% quarters" : t === "const" ? "Constant" : t;
+  const terms = [...new Set(M.regression.map(r => TERM(r.term)))].filter(t => t !== "Constant");
+  const star = p => p < 0.01 ? "***" : p < 0.05 ? "**" : p < 0.1 ? "*" : "";
+  const rows = terms.map(tn => [tn, ...specs.map(s => { const r = M.regression.find(x => x.spec === s && TERM(x.term) === tn); return r ? `${sgn(r.coef, 1)} pp${star(r.p)}` : "–"; })]);
+  rows.push(["R²", ...specs.map(s => M.regression.find(x => x.spec === s).r2.toFixed(2))]);
+  document.getElementById("reg-table").innerHTML = tableHTML(["Effect on annual price growth", ...specs], rows);
+}
+document.querySelectorAll("#aff-view button").forEach(b => b.onclick = () => {
+  affView = b.dataset.view;
+  document.querySelectorAll("#aff-view button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  renderAffordability();
+});
+
+/* ---------------------------------------------------------------- rates & outlook */
+function scatterChart(container, pts, cfg) {
+  const width = container.clientWidth || 500, height = Math.max(280, Math.min(380, width * 0.72));
+  const m = { t: 12, r: 16, b: 40, l: 46 };
+  container.querySelectorAll("svg").forEach(s => s.remove());
+  const svg = d3.select(container).insert("svg", ":first-child").attr("viewBox", `0 0 ${width} ${height}`).attr("role", "img").attr("aria-label", cfg.aria);
+  const xs = d3.scaleLinear().domain(d3.extent(pts, p => p.x)).nice().range([m.l, width - m.r]);
+  const ys = d3.scaleLinear().domain(d3.extent(pts, p => p.y)).nice().range([height - m.b, m.t]);
+  const muted = css("--muted"), grid = css("--grid"), axis = css("--axis");
+  svg.selectAll("line.gy").data(ys.ticks(6)).join("line").attr("x1", m.l).attr("x2", width - m.r).attr("y1", d => ys(d)).attr("y2", d => ys(d)).attr("stroke", grid);
+  svg.selectAll("text.ty").data(ys.ticks(6)).join("text").attr("x", m.l - 8).attr("y", d => ys(d)).attr("dy", "0.32em").attr("text-anchor", "end").attr("font-size", 11).attr("fill", muted).attr("class", "num").text(d => (d > 0 ? "+" : "") + d + "%");
+  svg.selectAll("text.tx").data(xs.ticks(6)).join("text").attr("x", d => xs(d)).attr("y", height - m.b + 16).attr("text-anchor", "middle").attr("font-size", 11).attr("fill", muted).attr("class", "num").text(d => d + "%");
+  svg.append("text").attr("x", (m.l + width - m.r) / 2).attr("y", height - 6).attr("text-anchor", "middle").attr("font-size", 11.5).attr("fill", css("--ink-2")).text(cfg.xLabel);
+  svg.append("line").attr("x1", m.l).attr("x2", width - m.r).attr("y1", ys(0)).attr("y2", ys(0)).attr("stroke", axis).attr("stroke-width", 1.2);
+  const n = pts.length, mx = d3.mean(pts, p => p.x), my = d3.mean(pts, p => p.y);
+  const b = d3.sum(pts, p => (p.x - mx) * (p.y - my)) / d3.sum(pts, p => (p.x - mx) ** 2), a = my - b * mx;
+  const r = d3.sum(pts, p => (p.x - mx) * (p.y - my)) / Math.sqrt(d3.sum(pts, p => (p.x - mx) ** 2) * d3.sum(pts, p => (p.y - my) ** 2));
+  svg.append("path").attr("d", d3.line().x(p => xs(p.x)).y(p => ys(p.y))(pts)).attr("fill", "none").attr("stroke", grid).attr("stroke-width", 1.2);
+  const [x0, x1] = xs.domain();
+  svg.append("line").attr("x1", xs(x0)).attr("x2", xs(x1)).attr("y1", ys(a + b * x0)).attr("y2", ys(a + b * x1)).attr("stroke", css("--ink-2")).attr("stroke-width", 1.2);
+  const ramp = ["--seq-0", "--seq-1", "--seq-2", "--seq-3", "--seq-4"].map(css);
+  const col = d3.scaleLinear().domain(d3.range(5).map(i => i * (n - 1) / 4)).range(ramp);
+  const tip = tooltipFor(container);
+  svg.selectAll("circle.p").data(pts).join("circle").attr("cx", p => xs(p.x)).attr("cy", p => ys(p.y)).attr("r", 4.5)
+    .attr("fill", (p, i) => col(i)).attr("stroke", css("--surface")).attr("stroke-width", 1.5);
+  svg.selectAll("circle.hit").data(pts).join("circle").attr("cx", p => xs(p.x)).attr("cy", p => ys(p.y)).attr("r", 11).attr("fill", "transparent")
+    .on("pointermove", (ev, p) => { const rc = container.getBoundingClientRect(); tip.show(`<div class="t-head">${qLabel(p.q)}</div>Price growth ${sgn(p.y, 1)}%<br>${cfg.xName} a year earlier ${nf1.format(p.x)}%`, ev.clientX - rc.left, ev.clientY - rc.top); })
+    .on("pointerleave", () => tip.hide());
+  const labels = ["2008Q4", "2013Q1", "2016Q4", "2020Q4", "2022Q4", "2024Q2", "2026Q1"];
+  svg.selectAll("text.lab").data(pts.filter(p => labels.includes(p.q))).join("text").attr("x", p => xs(p.x) + 6).attr("y", p => ys(p.y) - 6)
+    .attr("font-size", 10.5).attr("fill", css("--ink-2")).text(p => p.q.slice(0, 4));
+  return r;
+}
+let scView = "real", capView = "index";
+function renderRates() {
+  const R = DATA.rates;
+  const pts = R.scatter.filter(p => p[scView] != null && p.y != null).map(p => ({ q: p.q, x: p[scView], y: p.y }));
+  const r = scatterChart(document.getElementById("sc-chart"), pts, {
+    xLabel: scView === "real" ? "Real mortgage rate a year earlier (rate minus inflation)" : "Nominal mortgage rate a year earlier",
+    xName: scView === "real" ? "Real rate" : "Nominal rate", aria: "Price growth against the mortgage rate" });
+  document.getElementById("sc-note").textContent = `Each dot is a quarter, 2008–2026, joined in time order (darker = later). Correlation ${(r < 0 ? "−" : "+") + Math.abs(r).toFixed(2)}: ` +
+    (scView === "real" ? "a negative real rate, as in 2021–23 when inflation exceeded the rate, came before the price boom."
+                       : "weak, because rate rises tend to come with inflation, which pushes nominal prices up.");
+  const C = R.capacity;
+  const capSeries = capView === "index"
+    ? [{ key: "cap", name: "Borrowing capacity of an average wage", values: C.capacity_index, color: "--s2", label: true },
+       { key: "price", name: "Resale price index", values: C.hedonic, color: "--s1", label: true }]
+    : [{ key: "ratio", name: "Median 50 m² flat ÷ capacity", values: C.ratio, color: "--s1", label: true }];
+  document.getElementById("cap-legend").innerHTML = capSeries.map(s => `<span style="display:inline-flex;align-items:center;gap:7px;color:var(--ink-2)"><i class="swatch" style="background:${css(s.color)}"></i>${s.name}</span>`).join("");
+  lineChart(document.getElementById("cap-chart"), { x: C.q, series: capSeries, baseline: capView === "index" ? 100 : 1,
+    yFmt: capView === "index" ? (v => nf0.format(v)) : (v => v.toFixed(2)), aria: "Borrowing capacity and prices" });
+  document.getElementById("cap-note").textContent = capView === "index"
+    ? "Maximum loan at a payment of 40% of the Warsaw average gross wage over 25 years, 2015 = 100. It fell over 40% in 2021–22 as rates rose, while prices kept climbing."
+    : "Above 1, one average wage could not finance a typical 50 m² flat with an 80% loan. Near 0.65 in 2016–21, 1.2–1.25 in 2022–24, back to 0.85 by 2026 Q1.";
+  const irfRows = [["Price (nominal)", "nominal mortgage rate"], ["Price (nominal)", "real mortgage rate"], ["Price (real)", "real mortgage rate"],
+                   ["Resale volume", "nominal mortgage rate"], ["Resale volume", "real mortgage rate"]];
+  const cell = (o, s, h) => { const r = R.irf.find(x => x.outcome === o && x.shock === s && x.h === h); return `${sgn(r.beta, 1)}% <span style="color:var(--muted)">[${sgn(r.lo, 1)}, ${sgn(r.hi, 1)}]</span>`; };
+  document.getElementById("irf-table").innerHTML = "<table><thead><tr><th>Outcome</th><th>After +1 point in the…</th><th>1 year</th><th>2 years</th><th>3 years</th></tr></thead><tbody>" +
+    irfRows.map(([o, s]) => `<tr><td>${o}</td><td style="text-align:left">${s}</td><td>${cell(o, s, 4)}</td><td>${cell(o, s, 8)}</td><td>${cell(o, s, 12)}</td></tr>`).join("") + "</tbody></table>";
+  const F = R.forecast, nh = F.n_hist, nf = F.q.length - nh, last = F.hist[nh - 1];
+  const pad = (arr) => [...Array(nh - 1).fill(null), last, ...arr];
+  const scen = Object.keys(F.scenarios), colors = { "rates hold": "--s1", "real rate −1 pp": "--s3", "real rate +1 pp": "--s2" };
+  const series = [{ key: "hist", name: "Observed", values: [...F.hist, ...Array(nf).fill(null)], color: "--s1", label: false },
+    ...scen.map(s => ({ key: s, name: "Forecast: " + s, values: pad(F.scenarios[s]), color: colors[s], dash: s === "rates hold" ? "2 4" : null,
+      width: s === "rates hold" ? 2.2 : 1.6, lo: s === "rates hold" ? pad(F.lo) : null, hi: s === "rates hold" ? pad(F.hi) : null, label: s === "rates hold" }))];
+  const sw = s => s.dash ? `background:repeating-linear-gradient(90deg, ${css(s.color)} 0 3px, transparent 3px 6px)` : `background:${css(s.color)}`;
+  document.getElementById("fc-legend").innerHTML = series.map(s => `<span style="display:inline-flex;align-items:center;gap:7px;color:var(--ink-2)"><i class="swatch" style="${sw(s)}"></i>${s.name}</span>`).join("") +
+    `<span style="display:inline-flex;align-items:center;gap:7px;color:var(--ink-2)"><i class="swatch" style="background:${css("--s1")};opacity:.25;height:10px"></i>80% range</span>`;
+  lineChart(document.getElementById("fc-chart"), { x: F.q, series, yFmt: v => nf0.format(v), aria: "Price index forecast" });
+  document.getElementById("fc-end").textContent = qLabel(F.q[F.q.length - 1]);
+  document.getElementById("fc-note").textContent = `Resale hedonic index, 2015 = 100. Average of an autoregressive model and one that adds the real mortgage rate and wage growth. ` +
+    `Rates hold: ${sgn(F.change["rates hold"], 1)}% by ${qLabel(F.q[F.q.length - 1])}; a real rate 1 point lower: ${sgn(F.change["real rate −1 pp"], 1)}%; 1 point higher: ${sgn(F.change["real rate +1 pp"], 1)}%. ` +
+    `The 80% range shows how far past forecasts missed, and it dwarfs the scenario differences.`;
+  const MN = { naive: "No change", drift: "Trend", ar: "Autoregressive", arx: "Autoregressive + rates & wages", combo: "Average (used)" };
+  const accRows = ["naive", "drift", "ar", "arx", "combo"].map(m => [MN[m], ...[1, 4, 8].map(h => { const a = R.accuracy.find(x => x.model === m && x.h === h); return `${nf1.format(a.rmse)}%`; })]);
+  document.getElementById("fc-acc").innerHTML = tableHTML(["Model (backtest 2012–2026)", "1 quarter ahead", "4 quarters", "8 quarters"], accRows);
+}
+document.querySelectorAll("#sc-view button").forEach(b => b.onclick = () => { scView = b.dataset.view; document.querySelectorAll("#sc-view button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderRates(); });
+document.querySelectorAll("#cap-view button").forEach(b => b.onclick = () => { capView = b.dataset.view; document.querySelectorAll("#cap-view button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderRates(); });
+
+function renderAll() { renderIndex(); renderMap(); renderDistricts(); renderAffordability(); renderRates(); renderModels(); renderCalc(); }
+renderKPIs(); renderMethod(); initCalc(); renderAll();
+let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(renderAll, 120); }).observe(document.querySelector("main"));
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", renderAll);
+new MutationObserver(renderAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>

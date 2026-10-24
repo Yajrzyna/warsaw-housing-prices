@@ -1,0 +1,7 @@
+,scheme,model,n_test,median_ape_pct,mean_ape_pct,mae_pln_m2,within_10_pct,within_20_pct,median_bias_pct
+0,temporal (test 2025Q1-2026Q1),hedonic_A,35479,11.4,14.07,2411.56,44.24,76.11,-1.28
+1,temporal (test 2025Q1-2026Q1),hedonic_B,35479,10.27,12.75,2226.75,48.9,80.58,-2.62
+2,temporal (test 2025Q1-2026Q1),gbm,35479,9.02,11.22,1937.81,54.52,85.5,-2.89
+3,temporal (test 2025Q1-2026Q1),gbm_nbhd,35479,8.41,10.68,1820.8,57.65,87.21,-1.87
+4,"spatial (5-fold, unseen ~36 km2 areas)",hedonic_A,76733,13.02,16.48,2569.55,39.67,69.3,1.55
+5,"spatial (5-fold, unseen ~36 km2 areas)",gbm,76733,11.75,15.09,2454.06,43.54,73.82,-0.34

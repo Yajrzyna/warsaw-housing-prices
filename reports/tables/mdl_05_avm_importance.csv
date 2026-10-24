@@ -1,0 +1,15 @@
+,feature,mae_increase,sd
+0,nbhd_rel,0.02924,0.00086
+1,district,0.01763,0.00032
+2,age_at_sale,0.0175,0.0004
+3,dist_centre_km,0.01712,0.00071
+4,area_m2,0.01436,0.00056
+5,segment,0.01094,0.00018
+6,dist_metro_km,0.00699,0.0003
+7,rooms,0.00417,0.00011
+8,nbhd_median_dist_m,0.00287,0.00025
+9,dist_park_km,0.00271,9e-05
+10,floor,0.00206,0.00015
+11,y_2180,0.00189,0.00023
+12,dist_vistula_km,0.00185,0.00015
+13,footprint_m2,0.00185,0.00015
