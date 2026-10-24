@@ -1,0 +1,43 @@
+# Core
+pandas
+numpy
+pyarrow
+pyyaml
+requests
+lxml
+tqdm
+openpyxl
+
+# Geo
+geopandas
+shapely
+pyproj
+owslib
+osmnx
+h3
+folium
+
+# Statistics / econometrics
+scipy
+statsmodels
+linearmodels
+
+# Spatial econometrics
+libpysal
+esda
+spreg
+mgwr
+
+# Machine learning (LightGBM needs `brew install libomp`; HistGradientBoosting is used instead)
+scikit-learn
+
+# Visualisation
+matplotlib
+seaborn
+plotly
+
+# Quality / tooling
+pandera
+pytest
+ruff
+jupyter
